@@ -1,12 +1,14 @@
 console.log('%c HI', 'color: firebrick')
 
-// Challenge 1
-// Add images to the DOM
+// URLs
 const imgUrl = "https://dog.ceo/api/breeds/image/random/4"
 
+const breedUrl = 'https://dog.ceo/api/breeds/list/all'
+
 document.addEventListener('DOMContentLoaded', () => {
-    // Fetch images
-    fetch(imgUrl)
+    // Challenge 1
+    // Add dog images to the DOM
+    fetch(imgUrl) // Fetch images
     .then( (response) => response.json()) //parse response as json
     .then( (result) => {
         imageArray = result.message
@@ -15,6 +17,26 @@ document.addEventListener('DOMContentLoaded', () => {
         // }
         imageArray.forEach( (element) => addImage(element)) //add image to the DOM
     })
+
+    // Challenge 2
+    // List dog breeds
+    fetch(breedUrl) // fetch breed info
+    .then( (response) => response.json()) //parse response as json
+    .then( (result) => {
+        breedObject = result.message
+        for (item in breedObject){ //iterate over the object with breed names
+            addBreed(item) // add dog breed to the list
+        }
+    })
+
+    // Challenge 3
+    // Change color of lists when clicked
+    // Grab the list
+    const li = document.querySelectorAll('li');
+    console.log(li);
+    // for (let breed of li){
+    //     console.log(breed)
+    // }
 })
 
 // Add image function
@@ -27,4 +49,16 @@ function addImage(imageSource){
 
     // Append image
     imageDiv.appendChild(img);
+}
+
+// Add breeds function
+function addBreed(breed){
+    const li = document.createElement('li'); //create list element
+    li.textContent = breed; //add breed name
+
+    // Grab the div for the images
+    const breedList = document.querySelector("#dog-breeds");
+
+    // Append image
+    breedList.appendChild(li);
 }
