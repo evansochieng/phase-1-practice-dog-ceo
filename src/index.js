@@ -28,15 +28,17 @@ document.addEventListener('DOMContentLoaded', () => {
             addBreed(item) // add dog breed to the list
         }
     })
-
     // Challenge 3
     // Change color of lists when clicked
-    // Grab the list
-    const li = document.querySelectorAll('li');
-    console.log(li);
-    // for (let breed of li){
-    //     console.log(breed)
-    // }
+    .then( () => {
+        const li = document.querySelectorAll('li'); //grab the lists of dog breeds 
+        for (let breed of li){ // iterate over all the list elements
+            breed.addEventListener('click', (event) => { //listen to click event on the list
+                currentBreed = event.target // get the list
+                currentBreed.style.color = 'green'; //change font color of that list element
+            })
+        }
+    })
 })
 
 // Add image function
