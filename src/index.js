@@ -1,4 +1,4 @@
-console.log('%c HI', 'color: firebrick')
+//console.log('%c HI', 'color: firebrick')
 
 // URLs
 const imgUrl = "https://dog.ceo/api/breeds/image/random/4"
@@ -47,8 +47,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const li = document.querySelectorAll('li'); //grab the lists of dog breeds 
         for (let breed of li){
-            if (breed.innerText[0] !== selectedLetter){
-                breed.hidden = true
+            if (breed.innerText[0] !== selectedLetter){ //check if first letter don't match
+                breed.hidden = true //hide the values
             }
         }
     })
@@ -80,3 +80,24 @@ function addBreed(breed){
 
 // Filter breeds depending on first letter
 
+// Challenge 4
+// Filter breeds based on first letter
+// const dropdown = document.querySelector("#breed-dropdown");
+// const selectedLetter = dropdown.value; // get the dropdown's selected value
+// filterBreeds(selectedLetter)
+// const li = document.querySelectorAll('li'); //grab the lists of dog breeds 
+// for (let breed of li){
+//     if (breed.innerText[0] !== selectedLetter){
+//         breed.hidden = true
+//     }
+// }
+
+function filterBreeds(letter){
+    const li = document.querySelectorAll('li'); //grab the lists of dog breeds 
+    for (let breed of li){
+        if (breed.textContent[0] !== letter){
+            breed.hidden = true
+            //breed.remove()
+        }
+    }
+}
