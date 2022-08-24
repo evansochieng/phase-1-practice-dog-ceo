@@ -39,6 +39,19 @@ document.addEventListener('DOMContentLoaded', () => {
             })
         }
     })
+    // Challenge 4
+    // Filter breeds based on first letter
+    .then( () => {
+        const dropdown = document.querySelector("#breed-dropdown");
+        const selectedLetter = dropdown.value; // get the dropdown's selected value
+
+        const li = document.querySelectorAll('li'); //grab the lists of dog breeds 
+        for (let breed of li){
+            if (breed.innerText[0] !== selectedLetter){
+                breed.hidden = true
+            }
+        }
+    })
 })
 
 // Add image function
@@ -64,3 +77,6 @@ function addBreed(breed){
     // Append image
     breedList.appendChild(li);
 }
+
+// Filter breeds depending on first letter
+
