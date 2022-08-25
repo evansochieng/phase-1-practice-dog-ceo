@@ -5,6 +5,8 @@ const imgUrl = "https://dog.ceo/api/breeds/image/random/4"
 
 const breedUrl = 'https://dog.ceo/api/breeds/list/all'
 
+const breeds = []; //dog breeds
+
 document.addEventListener('DOMContentLoaded', () => {
     // Challenge 1
     // Add dog images to the DOM
@@ -24,8 +26,9 @@ document.addEventListener('DOMContentLoaded', () => {
     .then( (response) => response.json()) //parse response as json
     .then( (result) => {
         breedObject = result.message
-        for (item in breedObject){ //iterate over the object with breed names
+        for (let item in breedObject){ //iterate over the object with breed names
             addBreed(item) // add dog breed to the list
+            breeds.push(item) //add dog breed to the list of dogs
         }
     })
     // Challenge 3
@@ -39,19 +42,19 @@ document.addEventListener('DOMContentLoaded', () => {
             })
         }
     })
-    // Challenge 4
-    // Filter breeds based on first letter
-    .then( () => {
-        const dropdown = document.querySelector("#breed-dropdown");
-        const selectedLetter = dropdown.value; // get the dropdown's selected value
+    // // Challenge 4
+    // // Filter breeds based on first letter
+    // .then( () => {
+    //     const dropdown = document.querySelector("#breed-dropdown");
+    //     const selectedLetter = dropdown.value; // get the dropdown's selected value
 
-        const li = document.querySelectorAll('li'); //grab the lists of dog breeds 
-        for (let breed of li){
-            if (breed.innerText[0] !== selectedLetter){ //check if first letter don't match
-                breed.hidden = true //hide the values
-            }
-        }
-    })
+    //     const li = document.querySelectorAll('li'); //grab the lists of dog breeds 
+    //     for (let breed of li){
+    //         if (breed.innerText[0] !== selectedLetter){ //check if first letter don't match
+    //             breed.hidden = true //hide the values
+    //         }
+    //     }
+    // })
 })
 
 // Add image function
@@ -71,7 +74,7 @@ function addBreed(breed){
     const li = document.createElement('li'); //create list element
     li.textContent = breed; //add breed name
 
-    // Grab the div for the images
+    // Grab the ul for dog breeds
     const breedList = document.querySelector("#dog-breeds");
 
     // Append image
@@ -92,12 +95,41 @@ function addBreed(breed){
 //     }
 // }
 
+// Filter breeds depending on first letter
 function filterBreeds(letter){
-    const li = document.querySelectorAll('li'); //grab the lists of dog breeds 
-    for (let breed of li){
-        if (breed.textContent[0] !== letter){
-            breed.hidden = true
-            //breed.remove()
-        }
+    let matchingBreeds = breeds.filter( (breed) => {
+        return breed.startsWith(letter);
+    })
+    return matchingBreeds;
+}
+
+// Display the filtered breeds
+function appendFilteredBreeds(letter){
+    let matchingBreeds = filterBreeds(letter);
+
+    // Grab the ul for breed list
+    const breedList = document.querySelector("#dog-breeds");
+    for (element of breedList.children){
+        breedList.removeChild(element);
+    }
+
+    for (let breed of matchingBreeds){
+        // create a list for matching breeds
+        const li = document.createElement('li');
+        li.innerText = breed;
+
+        // // Grab the ul for breed list
+        // const breedList = document.querySelector("#dog-breeds");
+        // for (element of breedList.children){
+        //     element.remove();
+        // }
+        
+        // Display the matching lists
+        breedList.appendChild(li)
     }
 }
+
+// Get the value of the dropdown
+const dropdown = document.querySelector("#breed-dropdown");
+//const selectedLetter = dropdown.value; // get the dropdown's selected value
+//appendFilteredBreeds()
